@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epic Quest - Game Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        .font-game { font-family: 'Orbitron', monospace; }
+        .font-body { font-family: 'Inter', sans-serif; }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: #e5e7eb;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+    </style>
+</head>
+<body class="font-body bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="font-game text-2xl font-bold text-indigo-600">Epic Quest</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#download" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Download</a>
+                        <a href="#visual" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Visual</a>
+                        <a href="#storyline" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Storyline</a>
+                        <a href="#assets" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Assets</a>
+                        <a href="#about" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About Us</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-indigo-600">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="block px-3 py-2 text-gray-700 hover:text-indigo-600">Home</a>
+                <a href="#download" class="block px-3 py-2 text-gray-700 hover:text-indigo-600">Download</a>
+                <a href="#visual" class="block px-3 py-2 text-gray-700 hover:text-indigo-600">Visual</a>
+                <a href="#storyline" class="block px-3 py-2 text-gray-700 hover:text-indigo-600">Storyline</a>
+                <a href="#assets" class="block px-3 py-2 text-gray-700 hover:text-indigo-600">Assets</a>
+                <a href="#about" class="block px-3 py-2 text-gray-700 hover:text-indigo-600">About Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center pt-16">
+        <div class="text-center text-white z-10 relative px-4">
+            <h1 class="font-game text-5xl md:text-7xl font-black mb-6">EPIC QUEST</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">Petualangan epik menanti Anda dalam dunia fantasi yang penuh misteri dan tantangan</p>
+            <div class="space-x-4">
+                <button onclick="scrollToSection('download')" class="bg-white text-indigo-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                    Download Sekarang
+                </button>
+                <button onclick="scrollToSection('visual')" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition-colors">
+                    Lihat Trailer
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-game text-4xl font-bold text-gray-900 mb-4">Download Game</h2>
+                <p class="text-xl text-gray-600">Pilih platform favorit Anda dan mulai petualangan</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card-hover bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-8 text-white text-center">
+                    <div class="text-6xl mb-4">🖥️</div>
+                    <h3 class="text-2xl font-bold mb-4">Windows PC</h3>
+                    <p class="mb-6">Versi lengkap dengan grafis ultra HD</p>
+                    <button class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors w-full">
+                        Download (2.5 GB)
+                    </button>
+                </div>
+                <div class="card-hover bg-gradient-to-br from-green-500 to-teal-600 rounded-xl p-8 text-white text-center">
+                    <div class="text-6xl mb-4">📱</div>
+                    <h3 class="text-2xl font-bold mb-4">Mobile</h3>
+                    <p class="mb-6">Optimized untuk Android & iOS</p>
+                    <button class="bg-white text-green-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors w-full">
+                        Download (850 MB)
+                    </button>
+                </div>
+                <div class="card-hover bg-gradient-to-br from-red-500 to-pink-600 rounded-xl p-8 text-white text-center">
+                    <div class="text-6xl mb-4">🎮</div>
+                    <h3 class="text-2xl font-bold mb-4">Console</h3>
+                    <p class="mb-6">PlayStation & Xbox compatible</p>
+                    <button class="bg-white text-red-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors w-full">
+                        Pre-Order Sekarang
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Section -->
+    <section id="visual" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-game text-4xl font-bold text-gray-900 mb-4">Tampilan Visual</h2>
+                <p class="text-xl text-gray-600">Nikmati grafis memukau dan gameplay yang seru</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="card-hover bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="h-64 bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <div class="text-6xl mb-4">🎬</div>
+                            <p class="text-xl font-semibold">Trailer Gameplay</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Official Trailer</h3>
+                        <p class="text-gray-600 mb-4">Saksikan aksi pertempuran epik dan eksplorasi dunia yang luas</p>
+                        <button class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                            ▶️ Putar Video
+                        </button>
+                    </div>
+                </div>
+                <div class="card-hover bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="h-64 bg-gradient-to-br from-green-400 to-blue-400 flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <div class="text-6xl mb-4">🖼️</div>
+                            <p class="text-xl font-semibold">Screenshot Gallery</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Galeri Screenshot</h3>
+                        <p class="text-gray-600 mb-4">Koleksi gambar in-game dengan kualitas tinggi</p>
+                        <button class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                            📷 Lihat Galeri
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-4 gap-4">
+                <div class="aspect-square bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center text-white text-2xl">🏰</div>
+                <div class="aspect-square bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center text-white text-2xl">⚔️</div>
+                <div class="aspect-square bg-gradient-to-br from-green-400 to-teal-500 rounded-lg flex items-center justify-center text-white text-2xl">🐉</div>
+                <div class="aspect-square bg-gradient-to-br from-red-400 to-pink-500 rounded-lg flex items-center justify-center text-white text-2xl">💎</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Storyline Section -->
+    <section id="storyline" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-game text-4xl font-bold text-gray-900 mb-4">Storyline</h2>
+                <p class="text-xl text-gray-600">Ikuti perjalanan heroik dalam dunia yang penuh misteri</p>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl p-8 text-white mb-8">
+                        <h3 class="text-2xl font-bold mb-4">🌟 Cerita Utama</h3>
+                        <p class="text-lg leading-relaxed">
+                            Dalam kerajaan Aethermoor yang pernah damai, kegelapan mulai menyebar. Sebagai seorang penjelajah muda, 
+                            Anda harus mengungkap rahasia kuno dan mengumpulkan kekuatan untuk menyelamatkan dunia dari kehancuran total.
+                        </p>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-indigo-100 rounded-full p-3">
+                                <span class="text-2xl">🗡️</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Chapter 1: Awakening</h4>
+                                <p class="text-gray-600">Temukan kekuatan tersembunyi dalam diri Anda</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-indigo-100 rounded-full p-3">
+                                <span class="text-2xl">🏰</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Chapter 2: The Lost Kingdom</h4>
+                                <p class="text-gray-600">Jelajahi reruntuhan kerajaan yang hilang</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-indigo-100 rounded-full p-3">
+                                <span class="text-2xl">🐉</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Chapter 3: Dragon's Lair</h4>
+                                <p class="text-gray-600">Hadapi naga kuno penjaga kristal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-8 text-white">
+                    <h3 class="text-2xl font-bold mb-6">🎭 Karakter Utama</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-2xl">
+                                👤
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Aria Stormwind</h4>
+                                <p class="text-gray-300">Penjelajah muda dengan kekuatan elemen</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-teal-500 rounded-full flex items-center justify-center text-2xl">
+                                🧙‍♂️
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Master Eldric</h4>
+                                <p class="text-gray-300">Penyihir bijak dan mentor</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-red-400 to-pink-500 rounded-full flex items-center justify-center text-2xl">
+                                👹
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Lord Shadowmere</h4>
+                                <p class="text-gray-300">Penguasa kegelapan dan antagonis utama</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assets Section -->
+    <section id="assets" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-game text-4xl font-bold text-gray-900 mb-4">Game Assets</h2>
+                <p class="text-xl text-gray-600">Dokumentasi dan aset pengembangan game</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card-hover bg-white rounded-xl p-8 shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-blue-100 rounded-full p-4 mr-4">
+                            <span class="text-3xl">📋</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900">Game Design Document</h3>
+                            <p class="text-gray-600">Dokumen desain lengkap</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                            <span class="font-medium">📄 Core Mechanics</span>
+                            <span class="text-sm text-gray-500">PDF • 2.1 MB</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                            <span class="font-medium">🎨 Art Direction</span>
+                            <span class="text-sm text-gray-500">PDF • 5.3 MB</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                            <span class="font-medium">🔊 Audio Design</span>
+                            <span class="text-sm text-gray-500">PDF • 1.8 MB</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        📥 Download GDD
+                    </button>
+                </div>
+                
+                <div class="card-hover bg-white rounded-xl p-8 shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-green-100 rounded-full p-4 mr-4">
+                            <span class="text-3xl">📊</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900">Art & Design Document</h3>
+                            <p class="text-gray-600">Panduan visual dan aset</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                            <span class="font-medium">🎨 Character Concepts</span>
+                            <span class="text-sm text-gray-500">ZIP • 15.2 MB</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                            <span class="font-medium">🏞️ Environment Art</span>
+                            <span class="text-sm text-gray-500">ZIP • 28.7 MB</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                            <span class="font-medium">🎵 Music & SFX</span>
+                            <span class="text-sm text-gray-500">ZIP • 45.1 MB</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                        📥 Download ADD
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-game text-4xl font-bold text-gray-900 mb-4">About Us</h2>
+                <p class="text-xl text-gray-600">Tim developer yang berdedikasi menciptakan pengalaman gaming terbaik</p>
+            </div>
+            
+            <!-- Developer Profiles -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-center mb-12">👥 Tim Developer</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="card-hover text-center">
+                        <div class="w-32 h-32 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl text-white">
+                            👨‍💻
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Alex Chen</h4>
+                        <p class="text-indigo-600 font-semibold mb-3">Lead Game Developer</p>
+                        <p class="text-gray-600 text-sm">5+ tahun pengalaman dalam pengembangan game RPG dan sistem gameplay yang kompleks</p>
+                    </div>
+                    <div class="card-hover text-center">
+                        <div class="w-32 h-32 bg-gradient-to-br from-green-400 to-teal-500 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl text-white">
+                            👩‍🎨
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Sarah Martinez</h4>
+                        <p class="text-indigo-600 font-semibold mb-3">Art Director</p>
+                        <p class="text-gray-600 text-sm">Spesialis dalam character design dan environment art dengan pengalaman di studio AAA</p>
+                    </div>
+                    <div class="card-hover text-center">
+                        <div class="w-32 h-32 bg-gradient-to-br from-red-400 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl text-white">
+                            👨‍🎵
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">David Kim</h4>
+                        <p class="text-indigo-600 font-semibold mb-3">Audio Designer</p>
+                        <p class="text-gray-600 text-sm">Komposer musik game dan sound designer dengan portfolio lebih dari 20 game</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-center mb-12">📸 Galeri Tim</h3>
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="aspect-square bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center text-white text-3xl">
+                        🎮
+                    </div>
+                    <div class="aspect-square bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center text-white text-3xl">
+                        💻
+                    </div>
+                    <div class="aspect-square bg-gradient-to-br from-green-400 to-teal-500 rounded-lg flex items-center justify-center text-white text-3xl">
+                        🎨
+                    </div>
+                    <div class="aspect-square bg-gradient-to-br from-red-400 to-pink-500 rounded-lg flex items-center justify-center text-white text-3xl">
+                        🏆
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div>
+                <h3 class="text-2xl font-bold text-center mb-12">⏰ Timeline Pengerjaan</h3>
+                <div class="max-w-3xl mx-auto">
+                    <div class="space-y-8">
+                        <div class="timeline-item">
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-lg font-bold">Pre-Production</h4>
+                                    <span class="text-sm text-gray-500">Jan - Mar 2023</span>
+                                </div>
+                                <p class="text-gray-600">Konsep awal, riset pasar, dan pembuatan prototype gameplay dasar</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-lg font-bold">Production Phase 1</h4>
+                                    <span class="text-sm text-gray-500">Apr - Aug 2023</span>
+                                </div>
+                                <p class="text-gray-600">Pengembangan core mechanics, art pipeline, dan level design</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-lg font-bold">Alpha Testing</h4>
+                                    <span class="text-sm text-gray-500">Sep - Nov 2023</span>
+                                </div>
+                                <p class="text-gray-600">Internal testing, bug fixing, dan optimisasi performa</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-lg font-bold">Beta Release</h4>
+                                    <span class="text-sm text-gray-500">Dec 2023 - Feb 2024</span>
+                                </div>
+                                <p class="text-gray-600">Public beta testing dan feedback collection dari komunitas</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 p-6 rounded-lg shadow-md text-white">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-lg font-bold">🚀 Launch</h4>
+                                    <span class="text-sm">Mar 2024</span>
+                                </div>
+                                <p>Official release untuk semua platform!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-game text-2xl font-bold mb-4">Epic Quest</h3>
+                    <p class="text-gray-400">Menciptakan pengalaman gaming yang tak terlupakan untuk semua pemain.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Game</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#download" class="hover:text-white transition-colors">Download</a></li>
+                        <li><a href="#visual" class="hover:text-white transition-colors">Screenshots</a></li>
+                        <li><a href="#storyline" class="hover:text-white transition-colors">Storyline</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Developer</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#assets" class="hover:text-white transition-colors">Assets</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl hover:text-indigo-400 transition-colors">📧</a>
+                        <a href="#" class="text-2xl hover:text-indigo-400 transition-colors">🐦</a>
+                        <a href="#" class="text-2xl hover:text-indigo-400 transition-colors">📘</a>
+                        <a href="#" class="text-2xl hover:text-indigo-400 transition-colors">📷</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Epic Quest Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            const navHeight = 64; // Height of fixed navigation
+            const elementPosition = element.offsetTop - navHeight;
+            
+            window.scrollTo({
+                top: elementPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        // Add click handlers to all navigation links
+        document.querySelectorAll('.nav-link, a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+                
+                // Close mobile menu if open
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Active navigation highlighting
+        window.addEventListener('scroll', () => {
+            const sections = ['home', 'download', 'visual', 'storyline', 'assets', 'about'];
+            const navHeight = 64;
+            
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                const sectionTop = section.offsetTop - navHeight - 100;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                const scrollPosition = window.scrollY;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    // Remove active class from all nav links
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('text-indigo-600', 'font-semibold');
+                        link.classList.add('text-gray-700');
+                    });
+                    
+                    // Add active class to current section nav link
+                    const activeLink = document.querySelector(`a[href="#${sectionId}"]`);
+                    if (activeLink && activeLink.classList.contains('nav-link')) {
+                        activeLink.classList.remove('text-gray-700');
+                        activeLink.classList.add('text-indigo-600', 'font-semibold');
+                    }
+                }
+            });
+        });
+
+        // Download button functionality
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('Download') || button.textContent.includes('Pre-Order')) {
+                button.addEventListener('click', () => {
+                    alert('Download akan dimulai sebentar lagi! Terima kasih telah memilih Epic Quest.');
+                });
+            }
+        });
+
+        // Video/Gallery button functionality
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('Putar Video')) {
+                button.addEventListener('click', () => {
+                    alert('🎬 Trailer video akan diputar! (Demo - video player akan terbuka di aplikasi nyata)');
+                });
+            }
+            if (button.textContent.includes('Lihat Galeri')) {
+                button.addEventListener('click', () => {
+                    alert('📷 Galeri screenshot akan terbuka! (Demo - galeri lengkap tersedia di aplikasi nyata)');
+                });
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fc68e6f3c6fd20',t:'MTc1Nzk4NDI0Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
